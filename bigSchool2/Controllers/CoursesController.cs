@@ -89,11 +89,13 @@ namespace bigSchool2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,LecturerId,Place,DateTime,CategoryId")] Course course)
         {
+            ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+            course.LecturerId = user.Id;
             if (ModelState.IsValid)
             {
                 db.Entry(course).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Mine");
             }
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", course.CategoryId);
             return View(course);
@@ -119,10 +121,11 @@ namespace bigSchool2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Course course = db.Courses.Find(id);
+            
+            Course course = db.Courses.Find(id);            
             db.Courses.Remove(course);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Mine");
         }
 
         protected override void Dispose(bool disposing)
@@ -133,5 +136,27 @@ namespace bigSchool2.Controllers
             }
             base.Dispose(disposing);
         }
+        public ActionResult Attending()
+        {           
+            ApplicationUser currentUser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+            var listAttendances = db.Attendances.Where(p => p.Attendee == currentUser.Id).ToList(); var courses = new List<Course>();
+            foreach (Attendance temp in listAttendances)
+            {
+                Course objCourse = temp.Course;
+                objCourse.LecturerId = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(objCourse.LecturerId).Name;
+                courses.Add(objCourse);
+            }
+            return View(courses);
+        }
+        public ActionResult Mine()
+        {  
+        ApplicationUser currentUser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());        
+            var courses = db.Courses.Where(c => c.LecturerId == currentUser.Id && c.DateTime > DateTime.Now).ToList(); 
+            foreach (Course i in courses)
+            {
+                i.LecturerId = currentUser.Name; //Name la cot da them vao Aspnetuser }
+            }
+                return View(courses);
+            }
     }
 }

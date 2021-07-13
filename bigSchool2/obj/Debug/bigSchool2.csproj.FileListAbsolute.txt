@@ -106,3 +106,9 @@ D:\baitapweb\bigSchool2\bigSchool2\obj\Debug\bigSchool2.csproj.CopyComplete
 D:\baitapweb\bigSchool2\bigSchool2\obj\Debug\bigSchool2.dll
 D:\baitapweb\bigSchool2\bigSchool2\obj\Debug\bigSchool2.pdb
 D:\baitapweb\bigSchool2\bigSchool2\obj\Debug\bigSchool2.csprojAssemblyReference.cache
+D:\baitapweb\bigSchool2\bigSchool2\bin\System.Net.Http.Formatting.dll
+D:\baitapweb\bigSchool2\bigSchool2\bin\System.Web.Http.dll
+D:\baitapweb\bigSchool2\bigSchool2\bin\System.Web.Http.WebHost.dll
+D:\baitapweb\bigSchool2\bigSchool2\bin\System.Net.Http.Formatting.xml
+D:\baitapweb\bigSchool2\bigSchool2\bin\System.Web.Http.xml
+D:\baitapweb\bigSchool2\bigSchool2\bin\System.Web.Http.WebHost.xml
